@@ -26,6 +26,8 @@ router.get("/delete", category_controller.category_delete_get);
 // POST request for deleting a Category.
 router.post("/delete", category_controller.category_delete_post);
 
+router.get("/:category/items", category_controller.item_list);
+
 // // POST request for creating Book.
 // router.post("/book/create", book_controller.book_create_post);
 

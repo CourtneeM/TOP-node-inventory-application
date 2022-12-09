@@ -1,0 +1,6 @@
+<h1><%= title %></h1>
+<ul>
+  <% item_list.map((item) => { %>
+    <li><a href="<%= item.url %>"><%= item.name %></a></li>
+  <% }) %>
+</ul>

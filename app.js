@@ -11,7 +11,7 @@ const itemsRouter = require('./routes/items');
 var app = express();
 
 const mongoose = require("mongoose");
-const mongoDB = "mongodb+srv://<user>:<password>@cluster0.sizumig.mongodb.net/";
+const mongoDB = "mongodb+srv://<userName>:<password>@cluster0.sizumig.mongodb.net/<dbName>";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/categories', categoriesRouter);
-app.use('/items', itemsRouter);
+categoriesRouter.use('/:category', itemsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

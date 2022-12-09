@@ -5,8 +5,6 @@ const async = require("async");
 const { body, validationResult } = require('express-validator');
 
 exports.index = (req, res) => {
-  console.log(Category.find({}, "name description"));
-
   Category.find({})
     .sort({ name: 1 })
     .exec(function (err, list_categories) {
@@ -58,6 +56,22 @@ exports.category_delete_get = function (req, res, next) {
 }
 exports.category_delete_post = function (req, res, next) {
 
+}
+
+exports.item_list = function (req, res, next) {
+  Item.find({}, "name description category price num_in_stock")
+    .sort({ name: 1 })
+    .populate("category")
+    .exec(function (err, list_items) {
+      if (err) {
+        return next(err);
+      }
+
+      const categoryName = req.params.category[0].toUpperCase() + req.params.category.slice(1);
+      const filteredListItems = list_items.filter((item) => item.category.name.toLowerCase() == req.params.category);
+      //Successful, so render
+      res.render("item_list", { title: `${categoryName} List`, item_list: filteredListItems });
+  });
 }
 
 // // Display list of all Books.
