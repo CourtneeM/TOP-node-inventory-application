@@ -1,0 +1,28 @@
+<h1><%= title %></h1>
+
+<form action="" method="POST">
+  <div class="form-group">
+    <label for="categoryName">Name</label>
+    <input type="text" name="categoryName" id="categoryName" placeholder="Tools" value="<%= typeof category !== 'undefined' ? category.name : null %>" >
+  </div>
+  <div class="form-group">
+    <label for="categoryDescription">Description</label>
+    <input type="text" name="categoryDescription" id="categoryDescription" placeholder="Details about the category..." value="<%= typeof category !== 'undefined' ? category.description : null %>" >
+  </div>
+
+  <% if (typeof category !== 'undefined') { %>
+    <div class="form-group">
+      <input id="categoryId" class="form-control" type='hidden' name='categoryId' required='true' value="<%= category._id %>">
+    </div>
+  <% } %>
+
+  <input type="submit" value="Submit">
+</form>
+
+<% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% errors.map((error) => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
