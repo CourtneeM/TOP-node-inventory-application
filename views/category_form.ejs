@@ -19,6 +19,12 @@
   <input type="submit" value="Submit">
 </form>
 
+<% if (typeof category !== 'undefined') { %>
+  <button><a href="/categories/<%= category.name %>">Cancel</a></button>
+  <% } else { %>
+    <button><a href="/categories">Cancel</a></button>
+<% } %>
+
 <% if (typeof errors !== 'undefined') { %>
   <ul>
     <% errors.map((error) => { %>

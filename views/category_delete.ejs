@@ -4,5 +4,12 @@
   <div class="form-group">
     <input id="categoryName" class="form-control" type='hidden' name='categoryName' required='true' value="<%= category.name %>">
   </div>
+
+  <div class="form-group">
+    <input id="categoryId" class="form-control" type='hidden' name='categoryId' required='true' value="<%= category._id %>">
+  </div>
+
   <button type='submit'>Delete</button>
 </form>
+
+<button><a href="/categories/<%= category.name %>">Cancel</a></button>

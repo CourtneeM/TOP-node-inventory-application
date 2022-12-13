@@ -6,7 +6,8 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <% console.log(category_list) %>
+    <button><a href="/categories/create">Create Category</a></button>
+    <hr>
     <% category_list.map((category) => { %>
      <a href="<%= category.url %>"><%= category.name %></a></p>
     <% }) %>

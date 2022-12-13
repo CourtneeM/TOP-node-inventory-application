@@ -1,4 +1,9 @@
+<button><a href="/categories/<%= category.name %>">Back</a></button>
+
 <h1><%= title %></h1>
 <p><%= item.description %></p>
 <p>Price: <%= item.price %> rupees</p>
 <p>Stock: <%= item.num_in_stock %></p>
+
+<button><a href="/categories/<%= category.name %>/<%= item.url %>/update">Update</a></button>
+<button><a href="/categories/<%= category.name %>/<%= item.url %>/delete">Delete</a></button>

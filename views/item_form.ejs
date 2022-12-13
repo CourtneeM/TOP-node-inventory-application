@@ -1,0 +1,45 @@
+<h1><%= title %></h1>
+
+<form action="" method="POST">
+  <div class="form-group">
+    <label for="itemName">Name</label>
+    <input type="text" name="itemName" id="itemName" placeholder="Deku Nut" value="<%= typeof item !== 'undefined' ? item.name : null %>"  >
+  </div>
+  <div class="form-group">
+    <label for="itemDescription">Description</label>
+    <input type="text" name="itemDescription" id="itemDescription" placeholder="Details about the item..." value="<%= typeof item !== 'undefined' ? item.description : null %>"  >
+  </div>
+  <div class="form-group">
+    <label for="itemPrice">Price</label>
+    <input type="number" name="itemPrice" id="itemPrice" min=0 placeholder=0 value="<%= typeof item !== 'undefined' ? item.price : null %>" >
+  </div>
+  <div class="form-group">
+    <label for="itemStock">Number in stock</label>
+    <input type="number" name="itemStock" id="itemStock" min=0 placeholder=0 value="<%= typeof item !== 'undefined' ? item.num_in_stock : null %>" >
+  </div>
+  <div class="form-group">
+    <input id="categoryId" class="form-control" type='hidden' name='categoryId' required='true' value="<%= category._id %>">
+  </div>
+
+  <% if (typeof item !== 'undefined') { %>
+    <div class="form-group">
+      <input id="itemId" class="form-control" type='hidden' name='itemId' required='true' value="<%= item._id %>">
+    </div>
+  <% } %>
+
+  <input type="submit" value="Submit">
+</form>
+
+<% if (typeof item !== 'undefined') { %>
+  <button><a href="/categories/<%= category.name %>/<%= item.url %>">Cancel</a></button>
+  <% } else { %>
+    <button><a href="/categories/<%= category.name %>">Cancel</a></button>
+<% } %>
+
+<% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% errors.map((error) => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>

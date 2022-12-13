@@ -1,7 +1,15 @@
+<button><a href="/categories">Back</a></button>
+
 <h1><%= category.name %> List</h1>
 <p><%= category.description %></p>
+
+<button><a href="/categories/<%= category.name %>/create">Create Item</a></button>
+
 <ul>
   <% item_list.map((item) => { %>
-    <li><a href="<%= item.url %>"><%= item.name %></a></li>
+    <li><a href="<%= category.name %>/<%= item.url %>"><%= item.name %></a></li>
   <% }) %>
 </ul>
+
+<button><a href="/categories/<%= category.name %>/update">Update Category</a></button>
+<button><a href="/categories/<%= category.name %>/delete">Delete Category</a></button>

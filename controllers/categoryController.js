@@ -3,6 +3,7 @@ const Item = require("../models/item");
 
 const async = require("async");
 const { body, validationResult } = require('express-validator');
+const category = require("../models/category");
 
 exports.index = (req, res) => {
   Category.find({})
@@ -110,17 +111,19 @@ exports.category_create_post = [
 exports.category_update_get = function (req, res, next) {
   async.parallel(
     {
-      categories(callback) {
-        Category.find(callback);
+      category(callback) {
+        Category.findOne({name: req.params.category})
+          .exec(callback);
       },
     },
     (err, results) => {
       if (err) {
         return next(err);
       }
+
       res.render("category_form", {
-        title: "Update Category",
-        category: results.categories.filter(({ name, _description }) => name === req.params.category)[0],
+        title: `Update ${results.category.name}`,
+        category: results.category,
       });
     }
   );
@@ -219,7 +222,7 @@ exports.category_delete_get = function (req, res, next) {
       }
       // Successful, so render.
       res.render("category_delete", {
-        title: "Delete Category",
+        title: `Delete ${results.category.name}`,
         category: results.category,
       });
     }
@@ -231,18 +234,31 @@ exports.category_delete_post = function (req, res, next) {
       category(callback) {
         Category.findOne({name: req.body.categoryName}).exec(callback);
       },
+      items(callback) {
+        Item.find({category: req.body.categoryId})
+          .exec(callback);
+      }
     },
     (err, results) => {
       if (err) {
         return next(err);
       }
+      
       // Success
+      if (results.items.filter((item) => item.category).length > 0) {
+        // Category has items. Render in same way as for GET route.
+        res.render("category_delete", {
+          title: `Delete ${results.category.name}`,
+          category: results.category,
+        });
+        return;
+      }
       // Delete object and redirect to the list of categories.
       Category.deleteOne(results.category, (err) => {
         if (err) {
           return next(err);
         }
-        // Success - go to genre list
+        // Success - go to category list
         res.redirect("/categories");
       });
     }
@@ -263,8 +279,7 @@ exports.item_list = function (req, res, next) {
           if (err) {
             return next(err);
           }
-
-          console.log(list_items);
+          
           const filteredListItems = list_items.filter((item) => item.category.name == req.params.category);
           //Successful, so render
           res.render("item_list", { category: results, item_list: filteredListItems });

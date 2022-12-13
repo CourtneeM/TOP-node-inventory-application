@@ -1,0 +1,10 @@
+<h1><%= title %></h1>
+
+<form method='POST' action=''>
+  <div class="form-group">
+    <input id="itemName" class="form-control" type='hidden' name='itemName' required='true' value="<%= item.name %>">
+  </div>
+  <button type='submit'>Delete</button>
+</form>
+
+<button><a href="/categories/<%= category.name %>/<%= item.url %>">Cancel</a></button>
